@@ -7,17 +7,22 @@
 
 {% block script %}
 <style>
-  .article{
-    border-bottom: 1px solid #e6e6e6;
-    padding: 10px;
-  }
+ /*  .article{
+   border-bottom: 1px solid #e6e6e6;
+   padding: 10px;
+ } */
   .sub{
     font-size: 13px;
     border-bottom: 1px dashed #ddd;
   }
   .text{
-    margin: 15px;
-    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    padding: 15px;
+    font-size: 14px;
+    border: 1px solid #e5ebe4;
+    border-radius: 3px;
 
   }
   .time{
@@ -29,17 +34,22 @@
     font-size: 15px;
 
   }
-  .comment{
-    margin: 10px;
-
+  ul.topic-reply{
+    border-bottom: 1px dashed #ddd;
   }
+
   .field-label{
     color: #037b82;
     font-size: 15px;
     margin-bottom: 10px;
+    margin-top: 10px;
   }
   .field{
     margin-top: 10px;
+  }
+
+  #site-form{
+    padding-top: 10px;
   }
 
   .basic-textarea{
@@ -48,6 +58,7 @@
     font-size: 12px;
     padding: 5px;
     border: 1px solid #c9c9c9;
+    margin-top: 8px;
   }
 
   .btn-submit{
@@ -92,6 +103,9 @@
               }
               return true;
           });
+          var element = $(".text");
+          var temp =  element.text().trim().replace(/\n/g,'<br/>');
+           element.html(temp);
       });
         </script>
   </script>
@@ -117,25 +131,28 @@
 
   </div>
   <div class="text">
+  <p>
     {{ blog.content }}
+  </p>
   </div>
 </div>
 
 <div class="comment">
   <h2 class="hcom">评论 </h2>
   {% if comment_list %}
-    <ul class="topic-reply" id="comments">
+    <ul class="topic-reply" id="comments" style="padding-top:5px;">
 
   {% for comment in comment_list %}
         <li class="clearfix comment-item" id="433891435" data-cid="433891435" style="margin-left:10px;margin-bottom:5px;">
             <div class="reply-doc content" style="padding-left:0px;float:left;min-height:20px;">
                 <div class="bg-img-green">
                   <h4>
-                      <a href="{{ comment.get_creator().url() }}" class="">{{ comment.get_creator().name }}</a>
-                      <span class="pubtime">{{ comment.create_time }}</span>
+                  #{{loop.index}}
+                      <a href="{{ comment.get_creator().url() }}" class="">&nbsp;{{ comment.get_creator().name }}</a>
+                      <span class="pubtime" style="margin-left:10px;">{{ comment.create_time }}</span>
                   </h4>
                 </div>
-                <p style="font-size:13px;">{{ comment.content }} 
+                <p style="font-size:13px;margin-bottom:15px;">{{ comment.content }} 
                 {% if user.id==comment.creator_id|string %}
                 <span style="float:right;"><a href="/comment/delete/{{ blog.id }}/{{ comment.id }}/">删除</a></span>
                 {% endif %}
@@ -149,13 +166,11 @@
   {% endif %}
 
 
-<hr style="border: 1px dashed #ddd;">
-<form id="site-form" name="lzform" method="post" class="basic-form" action="/comment/create/"><div style="display:none;"><input type="hidden" name="ck" value="GiPS"></div>
-  <label class="field-label">添加评论:</label>
+<form id="site-form" name="lzform" method="post" class="basic-form" action="/comment/create/">
+  <label class="field-label" >添加评论:</label>
     <div class="item baseline-item">
         <textarea name="content" type="text" rows="15" cols="70" value="" class="basic-textarea"></textarea>
     </div>
-  
 
       <div class="form-actions">
             <input type="hidden" name="blog_id" value="{{ blog.id }}">

@@ -10,18 +10,17 @@
 
 <style>
 .group-board{
-  padding: 10px 20px;
+  padding: 15px;
+  padding-left: 30px;
   background: #fff4e8;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
   border-radius: 5px;
   position: relative;
   font-size: 13px;
 }
 
 .group-intro{
+    margin-bottom: 20px;
     margin-top: 20px;
-    margin-bottom: 30px;
 }
 
 .article{
@@ -32,10 +31,15 @@
     margin-top: 20px;
 }
 
-.rec-sec{
-  margin:5px;
-}
 </style>
+  <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+           var element = $(".group-intro");
+           var temp =  element.text().trim().replace(/\n/g,'<br/>');
+           element.html(temp);
+        });
+    </script>
 {% endblock %}
 
 
@@ -65,7 +69,7 @@
           {% endif %}
       </span>
       <span class="rec">
-          <a href="/group/join/{{ group.id }}/" style="font-size:15px;" class="lnk-sharing lnk-douban-sharing">
+          <a href="/group/join/{{ group.id }}/" style="font-size:15px;margin-left:5px;" class="lnk-sharing lnk-douban-sharing">
              {{ '已加入' if is_join else '加入'}}
              </a>
       </span>

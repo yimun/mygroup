@@ -62,7 +62,12 @@ def group_show(group_id):
 @app.route('/group/join/<group_id>/')
 def group_join(group_id):
     user = get_user()
-    return 'The project page'
+    group = Group.get(group_id)
+    if group.get_is_join(user.id):
+        group.join_user(user.id, False)
+    else:
+        group.join_user(user.id, True)
+    return redirect(url_for('group_show',group_id = group_id))
     
 @app.route('/group/list/mine/')
 @require_login
@@ -77,6 +82,7 @@ def group_list_hot():
     return header_render('group_list.html',title="热门小组",group_list=group_list)
 
 # --------------------------------------------------------------------
+
 @app.route('/blog/create/<group_id>/',methods=['GET', 'POST'])
 @require_login
 def blog_create(group_id):
@@ -84,7 +90,7 @@ def blog_create(group_id):
     if request.method == 'POST':
         title = request.form['blog_title']
         content = request.form['blog_content']
-        id = Blog.create(name, intro, get_user().id)
+        id = Blog.create(title, content, get_user().id, group_id)
         if not id:
             return header_render('blog_create.html', group = group)
         return redirect(url_for('blog_show',blog_id = id))
@@ -132,6 +138,9 @@ def comment_delete(blog_id, comment_id):
     comment = Comment.get(comment_id)
     comment.delete()
     return redirect(url_for('blog_show',blog_id = blog_id))
+
+
+
 
 if __name__ == '__main__':
     app.run()

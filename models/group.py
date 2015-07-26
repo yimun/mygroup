@@ -66,6 +66,16 @@ class Group(Model):
         rs = store.execute(sql, self.id)
         return [doubanusers.User(r[0]) for r in rs] if rs else None
 
+    def delete_member(self, user_id):
+        sql = 'delete from `mini_belong` where user_id=%s and group_id=%s'
+        params = (user_id, self.id)
+        store.execute(sql, params)
+        store.commit()
+
+    def get_creator(self):
+        creator = doubanusers.User(self.creator_id)
+        return creator
+
     @classmethod
     def get_user_groups(cls, user_id):
         sql = '''select A.id, A.name, A.intro, A.member_count, A.create_time, A.creator_id
@@ -87,4 +97,22 @@ class Group(Model):
         params = (user_id, self.id)
         rs = store.execute(sql, params)
         return True if rs and rs[0] else False
+
+    def update_member_count(self):
+        sql = '''update {} set member_count=(
+                 select count(*) from `mini_belong` where group_id=%s)
+                 where id = %s
+              '''.format(self.__table__)
+        params = (self.id, self.id)
+        store.execute(sql, params)
+        store.commit()
+
+    def join_user(self, user_id, join):
+        if join:
+            self.add_member(user_id)
+        else:
+            self.delete_member(user_id)
+        self.update_member_count()
+
+
 

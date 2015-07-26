@@ -3,20 +3,6 @@
 <head>
     <meta charset="UTF-8">
         <style>
-            .profile{
-              text-align: right;
-              position: absolute;
-              font-size: 14px;
-              margin-top: 15px;
-              right: -50px;
-            }
-            .logout{
-              text-align: right;
-              position: absolute;
-              font-size: 14px;
-              margin-top: 15px;
-              right: -90px;
-            }
             .back{
                 width: 950px;
                 margin: 0 auto;
@@ -29,8 +15,11 @@
               float: left;
               width: 180px;
               margin: 12px 20px 0 0;
-
             }
+            .profile a{
+              font-size: 13px;
+            }
+
 
         </style>
         <title>{% block title %}{% endblock %}</title>
@@ -76,19 +65,25 @@
                     </fieldset>
                   </form>
                 </div>
-                {% if not user %}
-                <div class="profile"><a href="{{ url }}" >登录</a></div>
-                {% else %}
-
-                  <div class="profile">
-                    <a href="{{ user.url() }}">{{user.name}}</a>
-                  </div>
-                  <div class="logout">
-                    <a href="{{ url }}">登出</a></div>
-                {% endif %}
+                <div id="user-sec" style="
+                              margin-top: 42px;
+                              position: absolute;
+                              right: 0px;
+                              text-aligh:center;
+                              float: right;">
+                    {% if not user %}
+                    <span class="profile"><a href="{{ url }}">登录</a></span>
+                    {% else %}
+                      <span class="profile" style="max-width:60px;margin-right:5px;">
+                        <a href="{{ user.url() }}">{{user.name}}</a>
+                      </span>
+                      <span class="profile">
+                        <a href="{{ url }}">登出</a></span>
+                    {% endif %}
+                </div>
+              </div>
               </div>
                   
-              </div>
             </div>
       </header>
 

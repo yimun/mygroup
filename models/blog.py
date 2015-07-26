@@ -40,9 +40,9 @@ class Blog(Model):
         return [cls(*r) for r in rs] if rs else None
 
     @classmethod
-    def create(cls, title, content, creator_id):
-        sql = 'insert into {} (title,content,creator_id) values(%s, %s, %s)'.format(cls.__table__)
-        params = (title, content, creator)
+    def create(cls, title, content, creator_id, group_id):
+        sql = 'insert into {} (title,content,creator_id,group_id) values(%s, %s, %s, %s)'.format(cls.__table__)
+        params = (title, content, creator_id, group_id)
         id = store.execute(sql,params)
         store.commit()
         return id
@@ -96,7 +96,7 @@ class Blog(Model):
 
     @classmethod
     def get_user_post(cls, user_id):
-        sql = 'select {all} from {table} where creator_id=%s'.format(
+        sql = 'select {all} from {table} where creator_id=%s order by create_time desc'.format(
             all = cls.__all__, table = cls.__table__)
         rs = store.execute(sql, user_id)
         return [cls(*r) for r in rs] if rs else None
