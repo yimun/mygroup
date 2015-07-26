@@ -1,0 +1,13 @@
+mysql:
+  db: test_mygroup
+  host: 127.0.0.1
+  passwd: linwei
+  port: 3306
+  user: root
+sqlstore:
+  shire-online:
+    db: test_mygroup
+    host: 127.0.0.1
+    passwd: linwei
+    port: 3306
+    user: root

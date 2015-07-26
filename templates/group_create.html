@@ -1,0 +1,116 @@
+{% extends "basehome.html" %}
+
+
+{% block title %}
+  创建小组
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $(".btn-submit").click(function(){
+              if(!$('#form_agreement').prop("checked")){
+                alert('请先同意协议');
+                return false;
+              }
+              var name = $("[name=grp_name]").val();
+              var intro = $("[name=grp_intro]").val();
+              if(name == ""){
+                alert("小组名不能为空");
+                return false;
+              }
+
+              if(name.length > 20){
+                alert("小组名不能大于20个字");
+                return false;
+              }
+
+              if(intro == ""){
+                alert("小组简介不能为空");
+                return false;
+              }
+              if(name.length>1000){
+                alert("小组简介不能大于1000个字");
+                return false;
+              }
+              return true;
+          });
+      });
+        </script>
+  </script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1>创建小组</h1>
+
+  <style>
+  .field-label{
+    color: #037b82;
+    font-size: 15px;
+  }
+  .field{
+    
+    margin-top: 10px;
+  }
+
+  .basic-input,.basic-textarea{
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 13px;
+    padding: 5px;
+    border: 1px solid #c9c9c9;
+  }
+
+  .btn-submit{
+    margin-top: 10px;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 15px;
+    text-decoration: none;
+    vertical-align: baseline;
+    background: none repeat scroll 0 0 #3fa156;
+    border: 1px solid #528641;
+  }
+  </style>
+
+    <form id="site-form" name="lzform" method="post" class="basic-form"><div style="display:none;"><input type="hidden" name="ck" value="GiPS"></div>
+        
+        <div class="field">
+            <label class="field-label">小组名称:</label>
+            <div class="item">
+                <input name="grp_name" type="text" maxlength="63" value="" class="basic-input">
+            </div>
+        </div>
+        <div class="field">
+            <label class="field-label">小组介绍:</label>
+            <div class="item baseline-item">
+                <textarea name="grp_intro" type="text" rows="15" cols="50" value="" class="basic-textarea"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="field-label">&nbsp;</label>
+            <div class="item">
+                <label class="checkbox"><input id="form_agreement" name="form_agreement" type="checkbox">
+                    我已认真阅读并同意《<a href="/about?policy=guideline" target="_blank">社区指导原则</a>》和《<a href="/about?policy=disclaimer" target="_blank">免责声明</a>》。
+                </label>
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="hidden" name="step_submit" value="on">
+            <input class="btn-submit" type="submit" value="提交申请">
+        </div>
+    </form>
+
+  
+
+
+{% endblock %}
+

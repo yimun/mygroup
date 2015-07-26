@@ -1,0 +1,38 @@
+body{
+    margin: 0px;
+}
+header{
+    background-image: url("../img/header.jpg");
+    text-align: center;
+    height: 180px;
+}
+
+header img{
+    border-radius: 50%;
+    margin-top: 40px;
+}
+header span{
+    margin: 10px;
+}
+
+section{
+    margin: 8px;
+}
+section span{
+    color: blue;
+}
+
+ul{
+    list-style: none;
+    /*overflow: scroll;*/
+    white-space: nowrap;
+    padding: 0;
+}
+
+li{
+    display: inline-block;
+    width: 33%;
+}
+li img{
+    width: 100%;
+}

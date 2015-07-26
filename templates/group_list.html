@@ -1,0 +1,59 @@
+{% extends "basehome.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+{% block content %}
+    
+    <style>
+     ul {
+        list-style: none;
+        margin: 0;
+        padding: 0; 
+        overflow: hidden; 
+        white-space: nowrap; 
+      }
+    .group_li{
+        border: 1px solid #e5ebe4;
+        display:inline-block;
+        width: 30%;
+        margin: 10px;
+        height: 100px;
+        list-style-type:none; 
+        text-align:center;
+        font-size: 16px;
+
+      }
+      .group_li:hover{
+          background: #e5ebe4;
+      }
+    </style>
+    <h1>{{ title }}</h1>
+    <div class="list">
+    {% if group_list %}
+        <ul>
+        {% for group in group_list %}
+            <li class="group_li" onclick="location.href='{{ group.build_url() }}'">
+              
+              <div class="info" style="margin-top:23px;">
+                <div class="title">
+                  <a title="{{ group.name }}" href="{{ group.build_url() }}" class="">{{ group.name }}</a><br>
+                </div>
+                <span class="num">成员：{{ group.member_count }}</span><br>
+              </div>
+              </li>
+              {% if loop.index%3 == 0 %}
+                <br>
+              {% endif %}
+        {% endfor%}
+        </ul> 
+        </div>
+        {% else %}
+        <h2>还木有小组，记得登录并关注小组哦～～</h2>
+      {% endif %}
+    </div>
+
+{% endblock %}
+

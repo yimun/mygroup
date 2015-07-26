@@ -1,0 +1,13 @@
+# DAE
+/venv
+/tmpdir
+/permdir
+/permdir_test
+/dev.yaml
+/syncdb_dumps.bak
+
+# Python
+*.py[cod]
+
+# Editor
+*.sw[op]

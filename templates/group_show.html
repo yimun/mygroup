@@ -1,0 +1,160 @@
+{% extends "basehome.html" %}
+
+
+{% block title %}
+小组
+{% endblock %}
+
+{% block script %}
+
+
+<style>
+.group-board{
+  padding: 10px 20px;
+  background: #fff4e8;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  position: relative;
+  font-size: 13px;
+}
+
+.group-intro{
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.article{
+    /*width: 700px;*/
+}
+
+.olt{
+    margin-top: 20px;
+}
+
+.rec-sec{
+  margin:5px;
+}
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<h1>{{ group.name }}</h1>
+
+<div class="grid-16-8 clearfix">
+<div class="article">
+    <div class="group-board">
+    <p>
+    创建于&nbsp; {{ group.create_time }}&nbsp; &nbsp;
+    
+         组长：<a href="{{ creator.url() }}">{{ creator.name }}</a>
+    </p>
+
+    <div class="group-intro">
+    {{ group.intro }}
+    </div>
+
+    <div class="group-rec">
+          
+    <div class="rec-sec">
+    <span class="rec">
+          {% if is_join %}
+          <a href="/blog/create/{{ group.id }}/" style="font-size:15px;" class="lnk-sharing lnk-douban-sharing">+添加帖子</a>
+          {% endif %}
+      </span>
+      <span class="rec">
+          <a href="/group/join/{{ group.id }}/" style="font-size:15px;" class="lnk-sharing lnk-douban-sharing">
+             {{ '已加入' if is_join else '加入'}}
+             </a>
+      </span>
+    </div>
+
+        </div>
+    </div>
+    <div class="blogs">
+        {% if blog_list %}
+        <table class="olt">
+          <tbody>
+                  {% for blog in blog_list %}
+                  <tr class="pl">
+                      <td class="td-subject">
+                        <a href="{{ blog.build_url() }}" title="{{ blog.title }}" class="title">{{ blog.title }}</a>
+                      </td>
+                      <td class="td-reply" nowrap="nowrap">{{ blog.comment_count }}回应</td>
+                      <td class="td-time" title="{{ blog.create_time }}" nowrap="nowrap">{{ blog.create_time }}</td>
+                      <td class="td-group"><a href="{{ blog.get_author().url() }}" class="">{{ blog.get_author().name }}</a></td>
+                  </tr>
+                  {% endfor %}
+
+          </tbody>
+          {% else %}
+          <h2 class="hcom" style="color:#000;margin-top:25px;">暂时没有帖子～</h2>
+          {% endif %}
+      </table>
+    </div>
+</div>
+
+<div class="aside">
+                
+    <div class="mod">
+<div class="obss">
+<div class="mod">
+    <h2>
+        成员({{ group.member_count}}):
+            
+    </h2>
+    
+<style>
+.member-list ul {
+  margin-top: -20px;
+  letter-spacing: -0.31em;
+  *letter-spacing: normal;
+  word-spacing: -0.43em;
+  font-size: 0;
+}
+.member-list .pic {
+  margin-bottom: 5px;
+}
+.member-list li {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  width: 75px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  vertical-align: top;
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+.member-list .name {
+  clear: both;
+}
+.u_actions { display:inline-block;*display:inline;zoom:1;vertical-align:middle; }
+</style>
+<div class="member-list">
+ <ul>
+    {% if member_list %}
+    {% for member in member_list%}
+    <li class="">
+        <div class="name">
+            <a href="{{ member.url() }}" class="">{{ member.name }}</a>
+        </div>
+    </li>
+    {% endfor %}
+    {% endif %}
+    
+</ul>
+</div> 
+    <!--- douban ad begin -->
+    <div id="dale_each_group_home_bottom_right"></div>
+    <!--- douban ad end -->
+        </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+

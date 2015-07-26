@@ -1,0 +1,167 @@
+{% extends "basehome.html" %}
+
+
+{% block title %}
+帖子
+{% endblock %}
+
+{% block script %}
+<style>
+  .article{
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px;
+  }
+  .sub{
+    font-size: 13px;
+    border-bottom: 1px dashed #ddd;
+  }
+  .text{
+    margin: 15px;
+    font-size: 15px;
+
+  }
+  .time{
+    color:#34833E;
+  }
+
+  .hcom{
+    color: #037b82;
+    font-size: 15px;
+
+  }
+  .comment{
+    margin: 10px;
+
+  }
+  .field-label{
+    color: #037b82;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .field{
+    margin-top: 10px;
+  }
+
+  .basic-textarea{
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 5px;
+    border: 1px solid #c9c9c9;
+  }
+
+  .btn-submit{
+    margin-top: 10px;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 15px;
+    text-decoration: none;
+    vertical-align: baseline;
+    background: none repeat scroll 0 0 #3fa156;
+    border: 1px solid #528641;
+  }
+
+</style>
+
+    <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $(".btn-submit").click(function(){
+              var content = $("[name=content]").val();
+              var blog_id = $("[name=blog_id]").val();
+              var is_join = $("[name=is_join]").val();
+              if(is_join == "False"){
+                alert("你还不是该小组的成员，请先加入！");
+                return false;
+              }
+              if(content == ""){
+                alert("评论不能为空");
+                return false;
+              }
+
+              if(content.length > 20){
+                alert("评论不能大于20个字");
+                return false;
+              }
+              if(blog_id == ""){
+                alert("未知错误");
+                return false;
+              }
+              return true;
+          });
+      });
+        </script>
+  </script>
+{% endblock %}
+
+
+{% block content %}
+<h1>{{ blog.title }}</h1>
+
+<div class="article">
+  <div class="sub">
+  <div class="author">作者：
+  <a href="{{ blog.get_author().url() }}">{{ blog.get_author().name }}</a>
+  </div>
+
+  <div class="group">来自：
+  <a href="{{ blog.get_group().build_url() }}">{{ blog.get_group().name }}</a>
+  &nbsp;&nbsp;&nbsp;
+  <span class="time">
+  {{ blog.create_time }}
+  </span>
+  </div>
+
+  </div>
+  <div class="text">
+    {{ blog.content }}
+  </div>
+</div>
+
+<div class="comment">
+  <h2 class="hcom">评论 </h2>
+  {% if comment_list %}
+    <ul class="topic-reply" id="comments">
+
+  {% for comment in comment_list %}
+        <li class="clearfix comment-item" id="433891435" data-cid="433891435" style="margin-left:10px;margin-bottom:5px;">
+            <div class="reply-doc content" style="padding-left:0px;float:left;min-height:20px;">
+                <div class="bg-img-green">
+                  <h4>
+                      <a href="{{ comment.get_creator().url() }}" class="">{{ comment.get_creator().name }}</a>
+                      <span class="pubtime">{{ comment.create_time }}</span>
+                  </h4>
+                </div>
+                <p style="font-size:13px;">{{ comment.content }} 
+                {% if user.id==comment.creator_id|string %}
+                <span style="float:right;"><a href="/comment/delete/{{ blog.id }}/{{ comment.id }}/">删除</a></span>
+                {% endif %}
+                </p>
+            </div>
+        </li>
+  {% endfor %}
+  </ul>
+  {% else %}
+    <h2 class="hcom" style="color:#000;">暂时没有评论～</h2>
+  {% endif %}
+
+
+<hr style="border: 1px dashed #ddd;">
+<form id="site-form" name="lzform" method="post" class="basic-form" action="/comment/create/"><div style="display:none;"><input type="hidden" name="ck" value="GiPS"></div>
+  <label class="field-label">添加评论:</label>
+    <div class="item baseline-item">
+        <textarea name="content" type="text" rows="15" cols="70" value="" class="basic-textarea"></textarea>
+    </div>
+  
+
+      <div class="form-actions">
+            <input type="hidden" name="blog_id" value="{{ blog.id }}">
+            <input type="hidden" name="is_join" value="{{ is_join }}">
+            <input class="btn-submit" type="submit" value="添加评论">
+        </div>
+    </form>
+  </div>
+{% endblock %}

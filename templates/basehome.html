@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <style>
+            .profile{
+              text-align: right;
+              position: absolute;
+              font-size: 14px;
+              margin-top: 15px;
+              right: -50px;
+            }
+            .logout{
+              text-align: right;
+              position: absolute;
+              font-size: 14px;
+              margin-top: 15px;
+              right: -90px;
+            }
+            .back{
+                width: 950px;
+                margin: 0 auto;
+            }
+            .content{
+                background: white;
+                min-height: 400px;
+            }
+            .main-title{
+              float: left;
+              width: 180px;
+              margin: 12px 20px 0 0;
+
+            }
+
+        </style>
+        <title>{% block title %}{% endblock %}</title>
+
+        {% block script %}{% endblock %}
+ 
+
+</head>
+<body>
+      
+      <header id="groupheader">
+            <link href="http://img3.douban.com/f/shire/87ccc3cbd9772399ce017a1543d6abd90459897d/css/douban.css" rel="stylesheet" type="text/css">
+              <link rel="stylesheet" href="http://img3.douban.com/misc/mixed_static/458fa80498cad3c2.css">
+
+            <div id="db-nav-group" class="nav">
+              <div class="nav-wrap">
+              <div class="nav-primary clearfix">
+                <div class="main-title" onclick="location.href='/'">
+                  <h1 style="font-size: 28px;color: #037b82;margin-bottom: 0px">Mini豆瓣小组</h1>
+                </div>
+
+                <div class="nav-items">
+                <ul>
+                    <li class="nav-item-first"><a href="/">我的小组帖子</a></li>
+                    <li><a href="/blog/list/myown/">我的发布</a></li>
+                    <li class="nav-item-first"><a href="/group/list/mine/">我的小组</a></li>
+                  <li><a href="/group/list/hot/">热门小组</a></li>
+                  {% if user %}
+                  <li style="margin-right:15px;margin-left:25px;" ><a style="font-size:14px;" href="/group/create/">+添加小组</a></li>
+                  {% endif %}
+               </ul>
+               </div>
+
+                <div class="nav-search">
+                  <form id="form" action="http://www.douban.com/group/search" method="get">
+                    <fieldset>
+                      <legend>搜索：</legend>
+                      
+                      <input type="hidden" name="cat" value="1019">
+                      <label for="inp-query" style="display: none;">小组、话题</label>
+                      <div class="inp"><input id="inp-query" name="q" size="22" maxlength="60" value="" placeholder="小组、话题"></div>
+                      <div class="inp-btn"><input type="submit" value="搜索"></div>
+                    </fieldset>
+                  </form>
+                </div>
+                {% if not user %}
+                <div class="profile"><a href="{{ url }}" >登录</a></div>
+                {% else %}
+
+                  <div class="profile">
+                    <a href="{{ user.url() }}">{{user.name}}</a>
+                  </div>
+                  <div class="logout">
+                    <a href="{{ url }}">登出</a></div>
+                {% endif %}
+              </div>
+                  
+              </div>
+            </div>
+      </header>
+
+
+      <div class="back">
+          <div class="content">
+
+                {% block content %}{% endblock %}
+        
+         <div id="footer">
+            <span id="icp" class="fleft gray-link">
+                © 2005－2015 douban.com, all rights reserved
+            </span>
+
+            <span class="fright">
+                <a href="http://code.dapps.douban.com/people/linwei">@linwei</a>
+            </span>
+        </div>
+    </div>
+</div>
+    
+</body>
+</html>

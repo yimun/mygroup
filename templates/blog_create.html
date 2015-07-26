@@ -1,0 +1,106 @@
+{% extends "basehome.html" %}
+
+
+{% block title %}
+  发布帖子
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $(".btn-submit").click(function(){
+              var title = $("[name=blog_title]").val();
+              var content = $("[name=blog_content]").val();
+              if(title == ""){
+                alert("标题不能为空");
+                return false;
+              }
+
+              if(title.length > 30){
+                alert("标题不能大于20个字");
+                return false;
+              }
+
+              if(content == ""){
+                alert("内容不能为空");
+                return false;
+              }
+              if(content.length>10000){
+                alert("内容不能大于10000个字");
+                return false;
+              }
+              return true;
+          });
+      });
+        </script>
+  </script>
+{% endblock %}
+
+
+{% block content %}
+
+<h1>发布帖子到&nbsp;[{{ group.name }}]</h1>
+
+  <style>
+  .field-label{
+    color: #037b82;
+    font-size: 15px;
+  }
+  .field{
+    
+    margin-top: 10px;
+  }
+
+  .basic-input,.basic-textarea{
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 13px;
+    padding: 5px;
+    border: 1px solid #c9c9c9;
+  }
+
+  .basic-input{
+    width: 300px;
+  }
+
+  .btn-submit{
+    margin-top: 10px;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 15px;
+    text-decoration: none;
+    vertical-align: baseline;
+    background: none repeat scroll 0 0 #3fa156;
+    border: 1px solid #528641;
+  }
+  </style>
+
+    <form id="site-form" name="lzform" method="post" class="basic-form"><div style="display:none;"><input type="hidden" name="ck" value="GiPS"></div>
+        
+        <div class="field">
+            <label class="field-label">标题:</label>
+            <div class="item">
+                <input name="blog_title" type="text" maxlength="63" value="" class="basic-input">
+            </div>
+        </div>
+        <div class="field">
+            <label class="field-label">内容:</label>
+            <div class="item baseline-item">
+                <textarea name="blog_content" type="text" rows="20" cols="80" value="" class="basic-textarea"></textarea>
+            </div>
+        </div>
+      
+        <div class="form-actions">
+            <input class="btn-submit" type="submit" value="发布">
+        </div>
+    </form>
+
+  
+
+
+{% endblock %}
+

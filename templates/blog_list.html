@@ -1,0 +1,60 @@
+{% extends "basehome.html" %}
+
+{% block title %}
+  豆瓣小组
+{% endblock %}
+
+{% block script %}
+
+<style>
+    
+    .block{
+        color: #999;
+        background: #f9f9f9;
+        font-size: 12px;
+        padding: 4px;
+    }
+    .channel-item{
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .source{
+        margin: 10px;
+    }
+    .pubtime{
+        float: right;
+        color: #999;
+    }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div class="bloglist">
+        {% if bloglist %}
+        {% for blog in bloglist %}
+            <div class="channel-item">
+            <div class="bd">
+              <h3 style="background-color: white;font-size:15px;"><a href="{{ blog.build_url() }}">{{ blog.title }}</a></h3>
+              <div class="block">
+                
+                <p>{{ blog.content }}
+              </p></div>
+              <div class="source">
+                <span class="from">来自<a href="{{ blog.get_group().build_url() }}">{{ blog.get_group().name }}</a></span>
+                <span class="pubtime">{{ blog.create_time }}</span>
+              </div>
+            </div>
+            </div>
+             <!-- <hr style="border:1px #f2fbf2 dotted;"> -->
+        {% endfor%}
+        {% else %}
+        <h2>还木有帖子，记得登录并关注小组哦～～</h2>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
