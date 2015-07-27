@@ -2,6 +2,7 @@
 ---
 
 项目地址：[http://code.dapps.douban.com/linwei/mygroup](http://code.dapps.douban.com/linwei/mygroup)
+线上演示地址：[http://doubandev2.intra.douban.com:20110/](http://doubandev2.intra.douban.com:20110/)
 
 ## 特性
 - 基于Flask框架实现的简易版小组
